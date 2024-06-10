@@ -9,7 +9,7 @@ namespace Exam.BusinessLogic.Services.Interfaces
 {
     public interface IJWTService
     {
-        string GetJWT(string user, int userID);
+        string GetJWT(string user, string role);
         bool VerifyPassword(string password, byte[] storedHash, byte[] storedSalt);
         User CreateUser(string username, string password);
     }

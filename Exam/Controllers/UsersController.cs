@@ -25,14 +25,14 @@ namespace Exam.Controllers
 
         [HttpPost("Register")]
         [AllowAnonymous]
-        [ProducesResponseType(201)] //Created
+        [ProducesResponseType(200)] //Ok
         [ProducesResponseType(400)] //Bad Request
         public async Task<IActionResult> Register([FromBody] UserRegisterDTO userRegisterDTO)
         {
             try
             {
                 var user = await _userService.RegisterUserAsync(userRegisterDTO);
-                return Created($"{user.Username} registered successfully, you can now login.", user);
+                return Ok($"{user.Username} registered successfully, you can now login.");
             }
             catch (Exception exception)
             {
@@ -67,7 +67,7 @@ namespace Exam.Controllers
         }
 
         [HttpGet("GetAllUsers")]
-        // [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(200)] //Ok
         [ProducesResponseType(400)] //Bad Request
         [ProducesResponseType(403)]//Forbid
