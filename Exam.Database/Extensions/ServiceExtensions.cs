@@ -10,7 +10,6 @@ namespace Exam.Database.Extensions
         public static IServiceCollection AddDatabase(this IServiceCollection services, string connectionString)
         {
             services.AddScoped<IPersonRepository, PersonRepository>();
-            services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddDbContext<MainDbContext>(options =>
             {

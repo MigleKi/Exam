@@ -18,14 +18,14 @@ namespace Exam.Shared.Attributes
             {
                 return new ValidationResult("Personal code is required.");
             }
-            if (IsException(personalCode))
-            {
-                return ValidationResult.Success;
-            }
 
             if (!Regex.IsMatch(personalCode, @"^\d{11}$"))
             {
                 return new ValidationResult("Personal code must be 11 digits.");
+            }
+            if (IsException(personalCode))
+            {
+                return ValidationResult.Success;
             }
 
             if (!ValidatePersonalCodePattern(personalCode))

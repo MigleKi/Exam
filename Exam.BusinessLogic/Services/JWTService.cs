@@ -23,12 +23,13 @@ namespace Exam.BusinessLogic.Services
             _configuration = configuration;
             _logger = logger;
         }
-        public string GetJWT(string user, string role)
+        public string GetJWT(string user, string role, int userId)
         {
             List<Claim> claims = new List<Claim>()
             {
                 new Claim(ClaimTypes.Name, user),
-               new Claim(ClaimTypes.Role, role)
+               new Claim(ClaimTypes.Role, role),
+               new Claim(ClaimTypes.NameIdentifier, userId.ToString())
         };
             var secretToken = _configuration.GetSection("JWT:Key").Value;
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(secretToken));

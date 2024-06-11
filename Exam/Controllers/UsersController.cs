@@ -29,6 +29,10 @@ namespace Exam.Controllers
         [ProducesResponseType(400)] //Bad Request
         public async Task<IActionResult> Register([FromBody] UserRegisterDTO userRegisterDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             try
             {
                 var user = await _userService.RegisterUserAsync(userRegisterDTO);
@@ -73,10 +77,6 @@ namespace Exam.Controllers
         [ProducesResponseType(403)]//Forbid
         public async Task<IActionResult> GetAllUsers()
         {
-            if (!User.IsInRole("Admin"))
-            {
-                return Forbid();
-            }
 
             _logger.LogInformation("Getting all users");
             try

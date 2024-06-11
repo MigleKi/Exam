@@ -17,7 +17,7 @@ namespace Exam.Shared.Attributes
             {
                 var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
                 if (!_extensions.Contains(extension))
-                    return new ValidationResult($"Invalid file. Allowed file types: {string.Join(", ", _extensions)}");
+                    return new ValidationResult($"This file extension is not allowed! Allowed file types are: {string.Join(", ", _extensions)}");
             }
             return ValidationResult.Success;
         }

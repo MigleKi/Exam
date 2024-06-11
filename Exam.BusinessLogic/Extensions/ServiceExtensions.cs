@@ -16,7 +16,6 @@ namespace Exam.BusinessLogic.Extensions
             services.AddScoped<IJWTService, JWTService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IPersonService, PersonService>();
-            services.AddScoped<IAddressService, AddressService>();
 
             return services;
         }

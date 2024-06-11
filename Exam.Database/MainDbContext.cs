@@ -42,11 +42,6 @@ namespace Exam.Database
                 .HasForeignKey<Address>(e => e.PersonId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<Address>()
-            //    .HasOne(e => e.Person)
-            //    .WithMany()
-            //    .HasForeignKey(e => e.PersonId)
-            //    .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<User>()

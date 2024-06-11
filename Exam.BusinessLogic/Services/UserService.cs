@@ -95,7 +95,7 @@ namespace Exam.BusinessLogic.Services
             }
 
 
-            var token = _jwtService.GetJWT(existingUser.Username, existingUser.Role);
+            var token = _jwtService.GetJWT(existingUser.Username, existingUser.Role, existingUser.Id);
 
             _logger.LogInformation($"User {userLoginDTO.Username} logged in successfully.");
             return token;

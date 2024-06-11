@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Exam.Shared.DTOs
 {
-    public class PersonCreateDTO
+    public class PersonUpdateDTO
     {
 
         [Required]
@@ -39,11 +39,8 @@ namespace Exam.Shared.DTOs
 
         [Required]
         [FileSize(4 * 1024 * 1024)]
-        [AllowedExtensions([".jpg", ".jpeg", ".png"])]
+        [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
         public IFormFile ProfilePhoto { get; set; }
-
-        [Required]
-        public AddressCreateDTO Address { get; set; }
     }
 }
 

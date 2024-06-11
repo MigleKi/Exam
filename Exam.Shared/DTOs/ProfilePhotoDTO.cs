@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Exam.Database.Repositories.Interfaces
+namespace Exam.Shared.DTOs
 {
-    public interface IAddressRepository
+    internal class ProfilePhotoDTO
     {
     }
 }

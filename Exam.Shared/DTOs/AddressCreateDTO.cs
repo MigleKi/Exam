@@ -23,10 +23,6 @@ namespace Exam.Shared.DTOs
         [RegularExpression(@"^[\d\w\-]+$", ErrorMessage = "Apartment number is not valid")]
         public string? ApartmentNumber { get; set; }
 
-        [Required]
-        public int PersonId { get; set; }
-
-        public Person Person { get; set; }
 
     }
 }

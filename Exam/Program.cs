@@ -7,6 +7,7 @@ using System.Security.Claims;
 using System.Text;
 using Serilog;
 using Exam.BusinessLogic;
+using System.Text.Json.Serialization;
 
 namespace Exam
 {
@@ -18,7 +19,9 @@ namespace Exam
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers().AddJsonOptions(options =>
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+
             var logger = new LoggerConfiguration()
                  .ReadFrom.Configuration(builder.Configuration)
                  .CreateLogger();
@@ -32,7 +35,7 @@ namespace Exam
 
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi.WebApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApi.Exam", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Scheme = "Bearer",
@@ -41,7 +44,10 @@ namespace Exam
                     Name = "Authorization",
                     Description = "Bearer Authentication with JWT Token",
                     Type = SecuritySchemeType.Http
+
                 });
+
+
                 c.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {

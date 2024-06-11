@@ -8,7 +8,7 @@ namespace Exam.Shared.Attributes
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             string street = value as string;
-            if (street != null && street.Contains(" ") && Regex.IsMatch(street, @"^[a-zA-Z0-9ąčęėįšųūžĄČĘĖĮŠŲŪŽ ]+$"))
+            if (street != null && street.Contains(" ") && Regex.IsMatch(street, @"^[a-zA-Z0-9ąčęėįšųūžĄČĘĖĮŠŲŪŽ ]+\.?$"))
             {
                 return ValidationResult.Success;
             }
