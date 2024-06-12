@@ -37,9 +37,9 @@ namespace Exam.Shared.DTOs
         [RegularExpression(@"^[^@\s]+@[^@\s]+\.(com|net|org|gov|lt)$", ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
-        [Required]
-        [FileSize(4 * 1024 * 1024)]
-        [AllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
+        //  [Required]
+        //[FileSize(4 * 1024 * 1024)]
+        //[FileAllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
         public IFormFile ProfilePhoto { get; set; }
     }
 }

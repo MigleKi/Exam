@@ -1,11 +1,9 @@
 ﻿using Exam.BusinessLogic.Services.Interfaces;
 using Exam.Database.Models;
-using Exam.Shared.DTOs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Collections;
-using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;

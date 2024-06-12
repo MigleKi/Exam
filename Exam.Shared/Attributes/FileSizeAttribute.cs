@@ -6,14 +6,22 @@ namespace Exam.Shared.Attributes
     public class FileSizeAttribute : ValidationAttribute
     {
         private readonly int _maxFileSize;
-        public FileSizeAttribute(int maxFileSize) => _maxFileSize = maxFileSize;
+        public FileSizeAttribute(int maxFileSize)
+        {
+            _maxFileSize = maxFileSize;
+        }
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var file = value as IFormFile;
-
-            if (file != null && file.Length > _maxFileSize)
+            if (value is IFormFile file && file.Length > _maxFileSize)
+            {
                 return new ValidationResult($"Maximum allowed file size is {_maxFileSize} bytes.");
+            }
+            //if (file == null)
+            //{
+            //    return new ValidationResult($"Picture is required");
+            //}
+
 
             return ValidationResult.Success;
         }

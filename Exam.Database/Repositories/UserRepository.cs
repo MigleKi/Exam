@@ -46,13 +46,7 @@ namespace Exam.Database.Repositories
             foreach (var person in user.Persons)
             {
                 _logger.LogInformation($"Deleting person ID: {person.Id} for user ID: {userId}");
-
-                //if (!string.IsNullOrEmpty(person.ProfilePhotoPath) && File.Exists(person.ProfilePhotoPath))
-                //{
-                //    File.Delete(person.ProfilePhotoPath);
-                //    _logger.LogInformation($"Person {person.Id} picture {person.ProfilePhoto} has been removed from the database.");
-                //}
-
+                                
                 var address = await _dbContext.Addresses.FirstOrDefaultAsync(p => p.PersonId == person.Id);
                 if (address != null)
                 {

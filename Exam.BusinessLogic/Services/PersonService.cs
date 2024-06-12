@@ -37,20 +37,7 @@ namespace Exam.BusinessLogic.Services
             person.UserId = userId;
 
 
-            //if (personCreateDTO.ProfilePhoto != null)
-            //{
-            //    var filename = ImageHelper.GenerateImageFileName(person.Name, person.LastName);
-            //    var filePath = ImageHelper.GetImageFilePath(filename);
-            //    ImageHelper.SaveResizedImage(filePath, personCreateDTO.ProfilePhoto, 200, 200);
-            //    person.ProfilePhotoPath = filePath;
-            //}
-
             await _personRepository.CreatePersonAsync(person);
-
-            //var address = _mapper.Map<Person>(personCreateDTO.Address);
-            //address.PersonId = person.Id;
-
-            //await _personRepository.CreatePlaceOfResidenceAsync(placeOfResidence);
 
             _logger.LogInformation($"Person created for user ID: {userId}");
             return _mapper.Map<PersonCreateDTO>(person);

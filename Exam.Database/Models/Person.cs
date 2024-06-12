@@ -31,8 +31,8 @@ namespace Exam.Database.Models
         [Required]
         public string Email { get; set; }
 
-        [Required]
-        public byte[] ProfilePhoto { get; set; }
+        //[Required]
+        public byte[]? ProfilePhoto { get; set; }
 
         [Required]
         [ForeignKey("Address")]
