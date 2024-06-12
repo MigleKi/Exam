@@ -3,6 +3,7 @@ using Exam.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Exam.Shared.DTOs;
 using System.Security.Claims;
+using Exam.BusinessLogic.Services;
 
 namespace Exam.Controllers
 {
@@ -77,6 +78,64 @@ namespace Exam.Controllers
             catch (Exception exception)
             {
                 _logger.LogError(exception, $"An error occurred while updating person ID {id} details.");
+                return BadRequest(exception.Message);
+            }
+        }
+
+        [HttpGet("GetByID{id}")]
+        [ProducesResponseType(200)] //Ok
+        [ProducesResponseType(400)] //Bad Request
+        [ProducesResponseType(403)]//Forbid
+        public async Task<IActionResult> GetPersonById(int id)
+        {
+            int? userId = GetUserIdFromClaims();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                var person = await _personService.GetByIdAsync(userId.Value, id);
+                return Ok(person);
+            }
+
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"An error occurred: {exception.Message}");
+                return BadRequest(exception.Message);
+            }
+        }
+
+        [HttpDelete("Delete{id}")]
+        [ProducesResponseType(200)] //Ok
+        [ProducesResponseType(404)] //Not Found
+        [ProducesResponseType(400)] //Bad Request
+        public async Task<IActionResult> DeletePerson(int id)
+        {
+            int? userId = GetUserIdFromClaims();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            try
+            {
+                var deletedPerson = await _personService.DeletePersonAsync(id, (int)userId);
+                if (deletedPerson == null)
+                {
+                    return NotFound("Person not found.");
+                }
+                return Ok(deletedPerson);
+            }
+
+            catch (KeyNotFoundException exception)
+            {
+                return NotFound(exception.Message);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"An error occurred while deleting the person with ID: {id}");
                 return BadRequest(exception.Message);
             }
         }

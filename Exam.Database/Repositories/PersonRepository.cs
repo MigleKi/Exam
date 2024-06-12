@@ -22,7 +22,7 @@ namespace Exam.Database.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeletePersonAsync(int personId)
+        public async Task<Person> DeletePersonAsync(int personId)
         {
             var person = await _dbContext.Persons.FindAsync(personId);
 
@@ -33,8 +33,9 @@ namespace Exam.Database.Repositories
             }
 
             _dbContext.Persons.Remove(person);
-            _logger.LogInformation($"Person {person.Id} has been deleted from database");
+            _logger.LogInformation($"Person {personId} has been deleted from database");
             await _dbContext.SaveChangesAsync();
+            return person;
 
         }
 

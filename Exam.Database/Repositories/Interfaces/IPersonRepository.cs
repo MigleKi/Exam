@@ -13,7 +13,7 @@ namespace Exam.Database.Repositories.Interfaces
         Task<Person> GetByIdAsync(int id);
         Task<IEnumerable<Person>> GetAllPersonsByUserIdAsync(int userId);
         Task UpdatePersonAsync(Person person);
-        Task DeletePersonAsync(int personId);
+        Task<Person> DeletePersonAsync(int personId);
 
     }
 }

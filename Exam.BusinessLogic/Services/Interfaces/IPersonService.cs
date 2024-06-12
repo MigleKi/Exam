@@ -7,9 +7,8 @@ namespace Exam.BusinessLogic.Services.Interfaces
     {
         Task<PersonCreateDTO> CreatePersonAsync(int userId, PersonCreateDTO personCreateDTO);
         Task<PersonGetDTO> GetByIdAsync(int userId, int personId);
-        Task<IEnumerable<PersonGetDTO>> GetAllPersonsByUserIdAsync(int userId);
         Task<PersonUpdateDTO> UpdatePersonAsync(int userId, int personId, PersonUpdateDTO personUpdateDetailsDTO);
-        Task<PersonDeleteDTO> DeletePersonAsync(int userId, int personId);
+        Task<PersonDeleteDTO> DeletePersonAsync(int personId, int userId);
 
     }
 }

@@ -2,9 +2,11 @@
 using Exam.BusinessLogic.Services.Interfaces;
 using Exam.Database.Enums;
 using Exam.Database.Models;
+using Exam.Database.Repositories;
 using Exam.Database.Repositories.Interfaces;
 using Exam.Shared.DTOs;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace Exam.BusinessLogic.Services
 {
@@ -61,41 +63,48 @@ namespace Exam.BusinessLogic.Services
 
             _mapper.Map(personUpdateDTO, existingPerson);
 
-            //if (Enum.TryParse(personUpdateDTO.Gender, out Gender gender))
-            //{
-            //    existingPerson.Gender = gender;
-            //}
-            //else
-            //{
-            //    _logger.LogWarning($"Invalid gender value: {personUpdateDetailsDTO.Gender} for person ID: {personId}");
-            //    throw new ArgumentException("Invalid gender value.");
-            //}
-
-            //if (person.PlaceOfResidence != null)
-            //{
-            //    _mapper.Map(personUpdateDetailsDTO.PlaceOfResidence, person.PlaceOfResidence);
-            //}
-
             await _personRepository.UpdatePersonAsync(existingPerson);
-            //await _personRepository.UpdatePlaceOfResidenceAsync(person.PlaceOfResidence);
 
             _logger.LogInformation($"Person details updated for person ID: {personId} by user ID: {userId}");
             return _mapper.Map<PersonUpdateDTO>(existingPerson);
         }
 
-        public async Task<PersonDeleteDTO> DeletePersonAsync(int userId, int personId)
+        public async Task<PersonDeleteDTO> DeletePersonAsync(int personId, int userId)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation($"Deletion for person ID: {personId} started");
+
+            var existingPerson = await _personRepository.GetByIdAsync(personId);
+            if (existingPerson == null)
+            {
+                _logger.LogWarning($"Person ID: {personId} is not found");
+                throw new KeyNotFoundException("Person not found");
+            }
+            if (existingPerson.UserId != userId)
+            {
+                _logger.LogWarning($"User ID: {userId} is not authorized to remove person ID: {personId}");
+                throw new ArgumentException("Access is denied.");
+            }
+
+            var deletedPerson = await _personRepository.DeletePersonAsync(personId);
+            return _mapper.Map<PersonDeleteDTO>(deletedPerson);
         }
 
-        public async Task<IEnumerable<PersonGetDTO>> GetAllPersonsByUserIdAsync(int userId)
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<PersonGetDTO> GetByIdAsync(int userId, int personId)
         {
-            throw new NotImplementedException();
+            _logger.LogInformation($"Retrieving person ID: {personId} for user ID: {userId}");
+            var person = await _personRepository.GetByIdAsync(personId);
+            if (person == null)
+            {
+                _logger.LogWarning($"Person with ID: {personId} not found.");
+                throw new ArgumentException("Person not found.");
+            }
+            if (person.UserId != userId)
+            {
+                _logger.LogWarning($"User ID: {userId} is not authorized to access person ID: {personId}");
+                throw new ArgumentException("Access is denied.");
+            }
+            return _mapper.Map<PersonGetDTO>(person);
         }
 
 

@@ -22,7 +22,8 @@ namespace Exam.Shared.DTOs
         public string TelephoneNumber { get; set; }
 
         public string Email { get; set; }
-        public IFormFile ProfilePhoto { get; set; }
+        //public IFormFile ProfilePhoto { get; set; }
+        public AddressGetDTO Address { get; set; }
     }
 }
 
