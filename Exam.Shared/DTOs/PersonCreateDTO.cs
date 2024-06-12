@@ -27,7 +27,7 @@ namespace Exam.Shared.DTOs
 
         [Required]
         [PersonalId]
-        public string PersonalId { get; set; }//Expand validation to include birthDate and Gender checks
+        public string PersonalId { get; set; }//Expand validation to include birthday and Gender checks
 
         [Required]
         [PhoneNumber]

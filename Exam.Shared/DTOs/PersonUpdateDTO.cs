@@ -40,7 +40,9 @@ namespace Exam.Shared.DTOs
         //  [Required]
         //[FileSize(4 * 1024 * 1024)]
         //[FileAllowedExtensions(new string[] { ".jpg", ".jpeg", ".png" })]
-        public IFormFile ProfilePhoto { get; set; }
+        // public IFormFile ProfilePhoto { get; set; }
+        [Required]
+        public AddressUpdateDTO Address { get; set; }
     }
 }
 

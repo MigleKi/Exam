@@ -24,8 +24,11 @@ namespace Exam.BusinessLogic
 
             CreateMap<Person, PersonDeleteDTO>().ReverseMap();
             CreateMap<Person, PersonGetDTO>().ReverseMap();
-            CreateMap<Person, PersonUpdateDTO>().ReverseMap();
+            CreateMap<Person, PersonUpdateDTO>()
+                .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.Address))
+            .ReverseMap();
             CreateMap<Address, AddressCreateDTO>().ReverseMap();
+            CreateMap<Address, AddressUpdateDTO>().ReverseMap();
         }
     }
 }

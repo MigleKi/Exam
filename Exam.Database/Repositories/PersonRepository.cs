@@ -21,7 +21,7 @@ namespace Exam.Database.Repositories
             await _dbContext.Persons.AddAsync(person);
             await _dbContext.SaveChangesAsync();
         }
-       
+
         public async Task DeletePersonAsync(int personId)
         {
             var person = await _dbContext.Persons.FindAsync(personId);
@@ -37,7 +37,7 @@ namespace Exam.Database.Repositories
             await _dbContext.SaveChangesAsync();
 
         }
-       
+
 
         public async Task<IEnumerable<Person>> GetAllPersonsByUserIdAsync(int userId)
         {
@@ -56,7 +56,7 @@ namespace Exam.Database.Repositories
                 .FirstOrDefaultAsync(p => p.Id == personId);
         }
 
-        public async Task UpdatePersonDetailsAsync(Person person)
+        public async Task UpdatePersonAsync(Person person)
         {
             _logger.LogInformation($"Updating person ID: {person.Id} details in the database");
             _dbContext.Persons.Update(person);

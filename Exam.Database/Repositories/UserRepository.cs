@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Exam.Database.Models;
+﻿using Exam.Database.Models;
 using Exam.Database.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -46,7 +40,7 @@ namespace Exam.Database.Repositories
             foreach (var person in user.Persons)
             {
                 _logger.LogInformation($"Deleting person ID: {person.Id} for user ID: {userId}");
-                                
+
                 var address = await _dbContext.Addresses.FirstOrDefaultAsync(p => p.PersonId == person.Id);
                 if (address != null)
                 {

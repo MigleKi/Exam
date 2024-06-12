@@ -2,9 +2,7 @@
 using Exam.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Exam.Shared.DTOs;
-using Exam.BusinessLogic.Services;
 using System.Security.Claims;
-using System.Data;
 
 namespace Exam.Controllers
 {
@@ -48,6 +46,39 @@ namespace Exam.Controllers
                 return BadRequest(exception.Message);
             }
 
+        }
+
+        [HttpPut("Update{id}")]
+        [ProducesResponseType(200)] //Ok
+        [ProducesResponseType(400)] //Bad Request
+        [ProducesResponseType(401)] //Unauthorized
+
+
+        public async Task<IActionResult> UpdatePersonDetails(int id, [FromForm] PersonUpdateDTO personUpdateDTO)
+        {
+            int? userId = GetUserIdFromClaims();
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            try
+            {
+                var updatedPerson = await _personService.UpdatePersonAsync(userId.Value, id, personUpdateDTO);
+                return Ok(updatedPerson);
+            }
+            catch (ArgumentException exception)
+            {
+                return Unauthorized(exception.Message);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, $"An error occurred while updating person ID {id} details.");
+                return BadRequest(exception.Message);
+            }
         }
         private int? GetUserIdFromClaims()
         {

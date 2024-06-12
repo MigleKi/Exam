@@ -43,6 +43,46 @@ namespace Exam.BusinessLogic.Services
             return _mapper.Map<PersonCreateDTO>(person);
         }
 
+        public async Task<PersonUpdateDTO> UpdatePersonAsync(int userId, int personId, PersonUpdateDTO personUpdateDTO)
+        {
+            _logger.LogInformation($"Update for person ID: {personId} started");
+
+            var existingPerson = await _personRepository.GetByIdAsync(personId);
+            if (existingPerson == null)
+            {
+                _logger.LogWarning($"Person ID: {personId} is not found");
+                throw new ArgumentException("Person not found.");
+            }
+            if (existingPerson.UserId != userId)
+            {
+                _logger.LogWarning($"User ID: {userId} is not authorized to access person ID: {personId}");
+                throw new ArgumentException("Access is denied.");
+            }
+
+            _mapper.Map(personUpdateDTO, existingPerson);
+
+            //if (Enum.TryParse(personUpdateDTO.Gender, out Gender gender))
+            //{
+            //    existingPerson.Gender = gender;
+            //}
+            //else
+            //{
+            //    _logger.LogWarning($"Invalid gender value: {personUpdateDetailsDTO.Gender} for person ID: {personId}");
+            //    throw new ArgumentException("Invalid gender value.");
+            //}
+
+            //if (person.PlaceOfResidence != null)
+            //{
+            //    _mapper.Map(personUpdateDetailsDTO.PlaceOfResidence, person.PlaceOfResidence);
+            //}
+
+            await _personRepository.UpdatePersonAsync(existingPerson);
+            //await _personRepository.UpdatePlaceOfResidenceAsync(person.PlaceOfResidence);
+
+            _logger.LogInformation($"Person details updated for person ID: {personId} by user ID: {userId}");
+            return _mapper.Map<PersonUpdateDTO>(existingPerson);
+        }
+
         public async Task<PersonDeleteDTO> DeletePersonAsync(int userId, int personId)
         {
             throw new NotImplementedException();
@@ -58,9 +98,6 @@ namespace Exam.BusinessLogic.Services
             throw new NotImplementedException();
         }
 
-        public async Task<PersonUpdateDTO> UpdatePersonDetailsAsync(int userId, int personId, PersonUpdateDTO personUpdateDetailsDTO)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

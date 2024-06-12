@@ -51,15 +51,9 @@ namespace Exam.BusinessLogic.Services
             var existingUser = await _userRepository.GetByIdAsync(userId);
             if (existingUser == null)
             {
-                _logger.LogWarning($"User with ID: {userId} not found");
+                _logger.LogWarning($"User ID: {userId} is not found");
                 throw new ArgumentException("User not found");
             }
-
-            //foreach (var person in existingUser.Persons)
-            //{
-            //    _logger.LogInformation($"Deleting person with ID: {person.Id} for user ID: {userId}");
-            //    await _personRepository.DeleteAsync(person.Id);
-            //}
 
             var deletedUser = await _userRepository.DeleteAsync(userId);
             return _mapper.Map<UserDeleteDTO>(deletedUser);
