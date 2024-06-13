@@ -84,6 +84,10 @@ namespace Exam.Controllers
                 var users = await _userService.GetAllUsersAsync();
                 return Ok(users);
             }
+            catch (UnauthorizedAccessException exception)
+            {
+                return Forbid(exception.Message);
+            }
             catch (Exception exception)
             {
                 _logger.LogError(exception, "Error getting all users");
