@@ -31,9 +31,13 @@ namespace Exam.BusinessLogic.Services
 
             if (existingPersons.Any(p => p.PersonalId == personCreateDTO.PersonalId))
             {
-                throw new ArgumentException($"Person is already created for user {userId}");
+                throw new ArgumentException($"Person with this identification code is already created for user {userId}");
             }
-
+            int firstDigit = int.Parse(personCreateDTO.PersonalId[0].ToString());
+            if (firstDigit > 2 && firstDigit < 7)
+            {
+                PersonalCodeCrossCheck(personCreateDTO);
+            }
 
             var person = _mapper.Map<Person>(personCreateDTO);
             person.UserId = userId;
@@ -44,6 +48,8 @@ namespace Exam.BusinessLogic.Services
             _logger.LogInformation($"Person created for user ID: {userId}");
             return _mapper.Map<PersonCreateDTO>(person);
         }
+
+
 
         public async Task<PersonUpdateDTO> UpdatePersonAsync(int userId, int personId, PersonUpdateDTO personUpdateDTO)
         {
@@ -61,6 +67,11 @@ namespace Exam.BusinessLogic.Services
                 throw new ArgumentException("Access is denied.");
             }
 
+            int firstDigit = int.Parse(personUpdateDTO.PersonalId[0].ToString());
+            if (firstDigit > 2 && firstDigit < 7)
+            {
+                PersonalCodeCrossCheck(personUpdateDTO);
+            }
             _mapper.Map(personUpdateDTO, existingPerson);
 
             await _personRepository.UpdatePersonAsync(existingPerson);
@@ -106,7 +117,58 @@ namespace Exam.BusinessLogic.Services
             }
             return _mapper.Map<PersonGetDTO>(person);
         }
+        private void PersonalCodeCrossCheck(PersonCreateDTO personCreateDTO)
+        {
+            int genderNumber = int.Parse(personCreateDTO.PersonalId.Substring(0, 1));
+            int birthYear = personCreateDTO.Birthday.Year;
+            int birthMonth = personCreateDTO.Birthday.Month;
+            int birthDay = personCreateDTO.Birthday.Day;
+            int lastTwoDigitsOfYear = birthYear % 100;
+            int personalCodeYear = int.Parse(personCreateDTO.PersonalId.Substring(1, 2));
+            int personalCodemonth = int.Parse(personCreateDTO.PersonalId.Substring(3, 2));
+            int personalCodeday = int.Parse(personCreateDTO.PersonalId.Substring(5, 2));
 
+            if (personCreateDTO.Gender == Gender.Male && (genderNumber == 4 || genderNumber == 6))
+            {
+                throw new ArgumentException("Personal code does not match gender value");
+            }
+            if (personCreateDTO.Gender == Gender.Female && (genderNumber == 3 || genderNumber == 5))
+            {
+                throw new ArgumentException("Personal code does not match gender value");
+            }
+            if (!(lastTwoDigitsOfYear == personalCodeYear && birthMonth == personalCodemonth && birthDay == personalCodeday))
+            {
+                throw new ArgumentException("Personal code does not match birth date value");
+            }
+
+
+        }
+        private void PersonalCodeCrossCheck(PersonUpdateDTO personUpdateDTO)
+        {
+            int genderNumber = int.Parse(personUpdateDTO.PersonalId.Substring(0, 1));
+            int birthYear = personUpdateDTO.Birthday.Year;
+            int birthMonth = personUpdateDTO.Birthday.Month;
+            int birthDay = personUpdateDTO.Birthday.Day;
+            int lastTwoDigitsOfYear = birthYear % 100;
+            int personalCodeYear = int.Parse(personUpdateDTO.PersonalId.Substring(1, 2));
+            int personalCodemonth = int.Parse(personUpdateDTO.PersonalId.Substring(3, 2));
+            int personalCodeday = int.Parse(personUpdateDTO.PersonalId.Substring(5, 2));
+
+            if (!(personUpdateDTO.Gender == Gender.Male && (genderNumber == 4 || genderNumber == 6)))
+            {
+                throw new ArgumentException("Personal code does not match gender value");
+            }
+            if (!(personUpdateDTO.Gender == Gender.Female && (genderNumber == 3 || genderNumber == 5)))
+            {
+                throw new ArgumentException("Personal code does not match gender value");
+            }
+            if (!(lastTwoDigitsOfYear == personalCodeYear && birthMonth == personalCodemonth && birthDay == personalCodeday))
+            {
+                throw new ArgumentException("Personal code does not match birth date value");
+            }
+
+
+        }
 
     }
 }

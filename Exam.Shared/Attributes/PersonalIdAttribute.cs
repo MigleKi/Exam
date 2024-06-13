@@ -28,9 +28,9 @@ namespace Exam.Shared.Attributes
                 return ValidationResult.Success;
             }
 
-            if (!ValidatePersonalCodePattern(personalCode))
+            if (!ValidateDatePattern(personalCode))
             {
-                return new ValidationResult("Personal code does not match the required pattern.");
+                return new ValidationResult("Personal code does not match the required pattern for date");
             }
 
             if (!ValidateChecksum(personalCode))
@@ -51,7 +51,7 @@ namespace Exam.Shared.Attributes
 
             return false;
         }
-        private bool ValidatePersonalCodePattern(string personalCode)
+        private bool ValidateDatePattern(string personalCode)
         {
             int firstDigit = int.Parse(personalCode[0].ToString());
             if (firstDigit < 1 || firstDigit > 6)
@@ -59,13 +59,13 @@ namespace Exam.Shared.Attributes
                 return false;
             }
 
-            int thirdDigit = int.Parse(personalCode[2].ToString());
-            if (thirdDigit < 0 || thirdDigit > 1)
+            int fourthDigit = int.Parse(personalCode[3].ToString());
+            if (fourthDigit < 0 || fourthDigit > 1)
             {
                 return false;
             }
-            int fourthDigit = int.Parse(personalCode[3].ToString());
-            if (fourthDigit < 0 || fourthDigit > 3)
+            int fifthhDigit = int.Parse(personalCode[5].ToString());
+            if (fifthhDigit < 0 || fifthhDigit > 3)
             {
                 return false;
             }

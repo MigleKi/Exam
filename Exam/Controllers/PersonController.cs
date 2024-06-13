@@ -3,7 +3,7 @@ using Exam.BusinessLogic.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Exam.Shared.DTOs;
 using System.Security.Claims;
-using Exam.BusinessLogic.Services;
+
 
 namespace Exam.Controllers
 {
