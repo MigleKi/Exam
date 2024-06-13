@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Exam.BusinessLogic.Services.Interfaces;
 using Exam.Database.Models;
-using Exam.Database.Repositories;
 using Exam.Database.Repositories.Interfaces;
 using Exam.Shared.DTOs;
 using Microsoft.Extensions.Logging;

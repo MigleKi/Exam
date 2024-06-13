@@ -1,11 +1,6 @@
-﻿using Exam.Database.Models;
-using Exam.Shared.Attributes;
-using System;
-using System.Collections.Generic;
+﻿using Exam.Shared.Attributes;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Exam.Shared.DTOs
 {

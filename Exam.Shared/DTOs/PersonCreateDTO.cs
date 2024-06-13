@@ -1,7 +1,6 @@
 ﻿using Exam.Database.Enums;
 using System.ComponentModel.DataAnnotations;
 using Exam.Shared.Attributes;
-using Microsoft.AspNetCore.Http;
 
 
 namespace Exam.Shared.DTOs

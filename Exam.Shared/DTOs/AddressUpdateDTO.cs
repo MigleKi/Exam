@@ -1,5 +1,4 @@
-﻿using Exam.Database.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Exam.Shared.Attributes;
 
 namespace Exam.Shared.DTOs

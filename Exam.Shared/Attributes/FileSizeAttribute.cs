@@ -17,11 +17,6 @@ namespace Exam.Shared.Attributes
             {
                 return new ValidationResult($"Maximum allowed file size is {_maxFileSize} bytes.");
             }
-            //if (file == null)
-            //{
-            //    return new ValidationResult($"Picture is required");
-            //}
-
 
             return ValidationResult.Success;
         }

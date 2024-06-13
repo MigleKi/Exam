@@ -2,11 +2,9 @@
 using Exam.BusinessLogic.Services.Interfaces;
 using Exam.Database.Enums;
 using Exam.Database.Models;
-using Exam.Database.Repositories;
 using Exam.Database.Repositories.Interfaces;
 using Exam.Shared.DTOs;
 using Microsoft.Extensions.Logging;
-using System;
 
 namespace Exam.BusinessLogic.Services
 {
